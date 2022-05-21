@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -7,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class SidebarComponent implements OnInit {
+  //@ViewChild('botonCerrarSidebar') botonCerrarSidebar: ElementRef;
 
-  constructor() { }
+  constructor(private router: Router,) { }
 
   ngOnInit(): void {
+
   }
+
+  
+  cerrarSidebar(){
+
+ //   this.botonCerrarSidebar.nativeElement.click();
+   }
 
 }

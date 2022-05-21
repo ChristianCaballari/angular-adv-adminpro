@@ -1,3 +1,4 @@
+import { ComponentsModule } from './../components/components.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -5,6 +6,9 @@ import { ProgressComponent } from './progress/progress.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
 import { PagesComponent } from './pages.component';
 import { SharedModule } from '../shared/shared.module';
+
+import { FormsModule } from '@angular/forms';
+
 
 // Hacer esto con AppRoutingModulo o con RouterModule e importarlo en los import es lo mismo
 // Es para hacer uso del router-outlet
@@ -24,12 +28,16 @@ import { RouterModule } from '@angular/router';
     DashboardComponent,
     ProgressComponent,
     Grafica1Component,
-    PagesComponent],
+    PagesComponent,
+    
+  ],
   imports: [
     CommonModule,
+    FormsModule,
     SharedModule,
     // AppRoutingModule,
-    RouterModule
+    RouterModule,
+    ComponentsModule
   ]
 })
 export class PagesModule { }
