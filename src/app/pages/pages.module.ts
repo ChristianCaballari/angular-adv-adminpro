@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 // Es para hacer uso del router-outlet
 // import { AppRoutingModule } from './../app-routing.module';
 import { RouterModule } from '@angular/router';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 
 
@@ -22,14 +23,15 @@ import { RouterModule } from '@angular/router';
     DashboardComponent,
     ProgressComponent,
     Grafica1Component,
-    PagesComponent
+    PagesComponent,
+    AccountSettingsComponent
   ],
   exports:[  
     DashboardComponent,
     ProgressComponent,
     Grafica1Component,
     PagesComponent,
-    
+    AccountSettingsComponent
   ],
   imports: [
     CommonModule,

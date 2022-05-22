@@ -1,24 +1,25 @@
-import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { SidebarService } from './../../services/sidebar.service';
+import { Component, OnInit } from '@angular/core';
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class SidebarComponent implements OnInit {
-  //@ViewChild('botonCerrarSidebar') botonCerrarSidebar: ElementRef;
 
-  constructor(private router: Router,) { }
+
+  menuItems: any[];
+
+  constructor(private sidebarService: SidebarService) {
+
+    this.menuItems = sidebarService.menu;
+    console.log(this.menuItems);
+  
+  }
 
   ngOnInit(): void {
 
   }
-
   
-  cerrarSidebar(){
-
- //   this.botonCerrarSidebar.nativeElement.click();
-   }
-
 }

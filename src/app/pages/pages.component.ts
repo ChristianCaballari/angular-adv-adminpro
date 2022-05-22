@@ -1,4 +1,9 @@
+import { SettingsService } from './../services/settings.service';
 import { Component, OnInit } from '@angular/core';
+
+
+declare function custonInitFunction();
+ 
 
 @Component({
   selector: 'app-pages',
@@ -6,11 +11,15 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
+
 export class PagesComponent implements OnInit {
 
-  constructor() { }
+
+  constructor(private settingsService:SettingsService) {
+    
+   }
 
   ngOnInit(): void {
+    custonInitFunction();
   }
-
 }
