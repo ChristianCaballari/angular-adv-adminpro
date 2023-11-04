@@ -1,3 +1,4 @@
+import { UsuarioService } from './../../services/usuario.service';
 import { SidebarService } from './../../services/sidebar.service';
 import { Component } from '@angular/core';
 
@@ -11,7 +12,12 @@ export class SidebarComponent {
 
   menuItems: any[];
 
-  constructor(private sidebarService: SidebarService){
+
+  constructor(private sidebarService: SidebarService,
+    private usuarioService:UsuarioService){
        this.menuItems = sidebarService.menu;
+  }
+  logout(){
+    this.usuarioService.logout();
   }
 }
