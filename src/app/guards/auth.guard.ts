@@ -18,8 +18,9 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   //   }}
   // )
 
-  console.log(userService.validarToken());
-  return userService.validarToken().pipe(
+  console.log('En el GuardAuth ',userService.validarToken());
+  return userService.validarToken()
+  .pipe(
     tap((isAuth) => {
       if (!isAuth) {
         router.navigateByUrl('/login');

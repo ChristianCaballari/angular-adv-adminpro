@@ -1,4 +1,6 @@
+import { enviroment } from '../../enviroments/environment';
 
+const base_url = enviroment.base_url;
 
 export class Usuario {
      
@@ -50,7 +52,16 @@ export class Usuario {
           this.img = img;
      }
      public getImg(){
-          return this.img;
+          let imgUrl = ''
+          if(this.img?.includes('https')){
+               imgUrl = this.img;
+          }
+          if(this.img && !this.img?.includes('https')){
+             imgUrl= `${base_url}/upload/usuarios/${this.img}`;
+          }else{
+               imgUrl= `${base_url}/upload/usuarios/no-image`;
+          }
+          return imgUrl;
      }
      public setGoogle(google:boolean){
            this.google = google;

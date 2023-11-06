@@ -7,6 +7,9 @@ import { enviroment } from '../../enviroments/environment';
 import { ResponseToken } from '../interfaces/response-token.interface';
 import { Observable , of} from 'rxjs';
 import { Router } from '@angular/router';
+import { Usuario } from '../models/usuario.model';
+import { UsuarioLogueado } from '../interfaces/usuario-logueado.interface';
+import { UsuarioPerfil } from '../interfaces/update-perfil.interface';
 
 
 declare const google: any;
@@ -18,28 +21,46 @@ const base_url = enviroment.base_url;
 })
 export class UsuarioService {
 
-  constructor(private http: HttpClient,private router: Router) {}
+  public usuario!: Usuario;
+
+  constructor(private http: HttpClient,private router: Router) {
+  }
+
+  get token():string{
+    return localStorage.getItem('token') || '';
+  }
+
+  get uid():string{
+    return this.usuario.getUid()||'';
+  }
 
   logout(){
     localStorage.removeItem('token');
-    google.accounts.id.revoke('christianccm17@gmail.com',()=>{
+    this.router.navigateByUrl('/login');
+
+    google.accounts.id.revoke(this.usuario.getEmail(),()=>{
     this.router.navigateByUrl('/login');
     });
   }
-
   validarToken():Observable<boolean>{
-    const token = localStorage.getItem('token') || '';
+
+   // console.log('En el renew ',localStorage.getItem('token'));
     
-   return this.http.get(`${base_url}/login/renew`,{
+   return this.http.get<UsuarioLogueado>(`${base_url}/login/renew`,{
       headers:{
-        'x-token': token
+        'x-token': this.token
       }
     }).pipe(
-        tap((resp :any)=>{
-          console.log(resp);
+        map((resp : UsuarioLogueado)=>{
+
+          const { email, google, nombre, role, img='', uid} = resp.usuario;
+
+          this.usuario = new Usuario(nombre,email,'',img,google,role,uid);
+
           localStorage.setItem('token',resp.token);
+
+          return true;
         }),
-        map(resp =>resp.ok),
         catchError(error =>of(false))
     );
   }
@@ -50,6 +71,22 @@ export class UsuarioService {
         localStorage.setItem('token', resp.token);
       })
     );
+  }
+
+ // actualizarPerfil(data: {emai:string, nombre:string}){}otra forma de recibir data
+
+  actualizarPerfil(perfil: UsuarioPerfil){
+
+    perfil = {
+      ...perfil,
+       role: this.usuario.getRole()||''
+    }
+
+    return this.http.put<ResponseToken>(`${base_url}/usuarios/${this.uid}`, perfil,{
+      headers: {
+          'x-token':this.token
+        }
+    });
   }
 
   login(formData: LoginForm) {
