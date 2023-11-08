@@ -4,6 +4,7 @@ import { UsuarioService } from '../services/usuario.service';
 import { tap } from 'rxjs';
 
 export const AuthGuard: CanActivateFn = (route, state) => {
+  
   const userService = inject(UsuarioService);
   const router = inject(Router);
 
@@ -18,7 +19,6 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   //   }}
   // )
 
-  console.log('En el GuardAuth ',userService.validarToken());
   return userService.validarToken()
   .pipe(
     tap((isAuth) => {

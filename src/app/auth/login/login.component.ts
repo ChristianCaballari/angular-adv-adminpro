@@ -55,6 +55,7 @@ export class LoginComponent implements AfterViewInit {
                 this.router.navigateByUrl('/');
               },
               error: (err)=>{
+
                 Swal.fire('Error',err.error.msg,'error');
               }
             });
@@ -75,6 +76,7 @@ export class LoginComponent implements AfterViewInit {
       error: (err)=> 
           {
            //Si sucede unerror
+           console.log(err);
            Swal.fire('Error',err.error.msg,'error');
           },
        });

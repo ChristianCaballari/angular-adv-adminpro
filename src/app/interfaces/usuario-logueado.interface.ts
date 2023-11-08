@@ -1,6 +1,7 @@
 export interface UsuarioLogueado {
      ok:boolean,
      token:string,
+     menu:any,
      usuario:{
      nombre:string,
      email:string,
