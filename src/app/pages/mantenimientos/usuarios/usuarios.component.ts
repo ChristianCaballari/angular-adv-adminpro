@@ -33,7 +33,7 @@ export class UsuariosComponent implements OnInit ,OnDestroy{
     this.imgSubs.unsubscribe();
   }
 
-  ngOnInit():void{
+ngOnInit():void{
    this.cargarUsuarios();
  this.imgSubs =  this.modalImagenService.nuevaImagen.subscribe(img =>this.cargarUsuarios());
 }
@@ -41,7 +41,6 @@ export class UsuariosComponent implements OnInit ,OnDestroy{
   cargarUsuarios(){
     this.cargando = true;
     this.usuarioService.cargarUsuarios(this.desde).subscribe(({total,usuarios})=>{
-      console.log(usuarios);
       this.usuarios = usuarios;
       this.usuariosTemp = usuarios;
       this.totalUsuarios = total;
@@ -61,20 +60,16 @@ export class UsuariosComponent implements OnInit ,OnDestroy{
   }
 
   buscar(termino: string){
-
     
      if(termino.length === 0){return this.usuariosTemp = this.usuarios; }
 
-
     this.busquedasService.buscar('usuarios',termino)
-      .subscribe(resultados =>{
-          this.usuarios = resultados;
-
+      .subscribe((resultados )=>{
+          this.usuarios = resultados as Usuario[];
       });
       return;
   }
   public eliminarUsuario(usuario: Usuario){
-  console.log(usuario.getUid(), this.usuarioService.uid);
     if(usuario.getUid() === this.usuarioService.uid){
       return (Swal.fire('Error','No puede borrar asimismo','error'));
     }
@@ -108,6 +103,7 @@ export class UsuariosComponent implements OnInit ,OnDestroy{
         });
     }
     abrirModal(usuario:Usuario){
+
       this.modalImagenService.abrirModal('usuarios',usuario.getUid()||'',usuario.getImg());
     }
 }

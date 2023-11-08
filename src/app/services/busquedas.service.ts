@@ -4,6 +4,8 @@ import { enviroment } from 'src/enviroments/environment';
 import { CargarUsuario } from '../interfaces/usuario-mantenimiento.interface';
 import { map } from 'rxjs';
 import { Usuario } from '../models/usuario.model';
+import { Hospital } from '../models/hospital.model';
+import { Medico } from '../models/medico.model';
 
 const base_url = enviroment.base_url;
 
@@ -15,11 +17,11 @@ export class BusquedasService {
 
   constructor(private http: HttpClient) { }
 
-  get token():string{
+  private get token():string{
     return localStorage.getItem('token') || '';
   }
 
-  get headers(){
+  private get headers(){
     return  {
       headers:{
       'x-token':this.token
@@ -31,6 +33,14 @@ export class BusquedasService {
      return  resultados.map(
       user => new Usuario(user.nombre,user.email,'',user.img,user.google,user.role,user.uid));   
   }
+  private transformarHospitales(resultados:any[]):Hospital[]{
+       return resultados;
+  }
+
+  private transformarMedicos(resultados:any[]):Medico[]{
+    return resultados;
+}
+
   buscar(
     tipo:'usuarios'|'medicos'|'hospitales',
     termino:string = ''){
@@ -38,17 +48,16 @@ export class BusquedasService {
 
     const url = `${base_url}/todo/coleccion/${tipo}/${termino}`;
 
-    return this.http.get<any[]>(url,this.headers)
+    return this.http.get<Hospital[]|Usuario[]>(url,this.headers)
             .pipe(
                  map( (resp:any)=>{
-console.log(resp);
                   switch(tipo){
                     case 'usuarios':
                          return this.transformarUsuarios(resp.resultados);
                     case 'medicos':
-                          return this.transformarUsuarios(resp.resultados);
+                          return this.transformarMedicos(resp.resultados);
                     case 'hospitales':
-                          return this.transformarUsuarios(resp.resultados);
+                          return this.transformarHospitales(resp.resultados);
                       default:
                         return [];
                     }

@@ -10,8 +10,7 @@ import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario.model';
 import { UsuarioLogueado } from '../interfaces/usuario-logueado.interface';
 import { UsuarioPerfil } from '../interfaces/update-perfil.interface';
-import { CargarUsuario, UsuariosCargados } from '../interfaces/usuario-mantenimiento.interface';
-import Swal from 'sweetalert2';
+import { UsuariosCargados } from '../interfaces/usuario-mantenimiento.interface';
 
 
 declare const google: any;

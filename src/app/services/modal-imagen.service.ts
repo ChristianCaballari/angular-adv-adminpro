@@ -20,19 +20,35 @@ export class ModalImagenService {
   abrirModal( 
       tipo: 'usuarios'|'medicos'|'hospitales',
       id: string,
-      img: string
+      img: string='no-image',
     ) {
     this._ocultarModal = false;
     this.tipo = tipo;
     this.id = id;
     // localhost:3000/api/upload/medicos/no-img
-    this.img = img;
     // if ( img.includes('https') ) {
-    //   this.img = img;
-    // } else {
-    //   this.img = `${ base_url }/upload/${ tipo }/${ img }`;
-    // }
-      console.log(this.img);    
+    //  return this.img = img;
+    // }else if(!img){
+    //    this.img = `${base_url}/upload/${tipo}/no-image`;
+    // }else if(!img.includes('https')&& img){
+    //   console.log('Concatenadode modelo user');
+    //   this.img =  `${ base_url }/upload/${ tipo }/${ img }`;
+    // } 
+    // return 
+    if ( img.includes('https') ) {
+      this.img = img;
+    } else {
+      if(tipo ==='usuarios'){
+       this.img = `${ base_url }/upload/${ tipo }/${ this.recconstruirImagenUsuario(img) }`;
+      }else{
+        this.img = `${ base_url }/upload/${ tipo }/${ img }`;
+      }    
+    }    
+  }
+  recconstruirImagenUsuario(img:string){
+    let arrayTemp = img.split('/');
+    img = '';
+    return arrayTemp[arrayTemp.length-1];
   }
 
   cerrarModal() {
